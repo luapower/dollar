@@ -1,9 +1,6 @@
 
 --seriously, there's no reason for all that qualifying of everything.
 
-io.stdout:setvbuf'no'
-io.stderr:setvbuf'no'
-
 ffi = require'ffi'
 bit = require'bit'
 glue = require'glue'
@@ -87,3 +84,21 @@ BSD = false
 POSIX = false
 _G[ffi.os] = true
 win = Windows
+
+--dump standard library keywords for syntax highlighting.
+
+if not ... then
+	local t = {}
+	for k,v in pairs(_G) do
+		if k ~= 'type' then
+			t[#t+1] = k
+			if type(v) == 'table' and v ~= _G and v ~= arg then
+				for kk in pairs(v) do
+					t[#t+1] = k..'.'..kk
+				end
+			end
+		end
+	end
+	sort(t)
+	print(concat(t, ' '))
+end
