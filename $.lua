@@ -67,6 +67,7 @@ string.ends    = glue.ends
 string.trim    = glue.trim
 string.lines   = glue.lines
 string.esc     = glue.esc
+esc            = glue.esc --because it's used with constants mostly.
 string.fromhex = glue.fromhex
 string.tohex   = glue.tohex
 
