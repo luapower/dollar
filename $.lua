@@ -26,7 +26,20 @@ pop = table.remove
 
 traceback = debug.traceback
 
-date = os.date --clock() and time() comes from the time module.
+date = os.date
+sleep = time.sleep
+local os_time = os.time
+local time_time = time.time
+local time_clock = time.clock
+function time(t)
+	if not t then return time_time() end
+	return os_time(t)
+end
+local t0 = time_clock()
+function clock()
+	return time_clock() - t0
+end
+
 exit = os.exit
 
 cast = ffi.cast
