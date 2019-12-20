@@ -60,6 +60,7 @@ count       = glue.count
 index       = glue.index
 keys        = glue.keys
 sortedpairs = glue.sortedpairs
+map         = glue.map
 
 indexof = glue.indexof
 append  = glue.append
