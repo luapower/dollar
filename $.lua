@@ -44,6 +44,14 @@ exit = os.exit
 
 cast = ffi.cast
 
+Windows = false
+Linux   = false
+OSX     = false
+BSD     = false
+POSIX   = false
+_G[ffi.os] = true
+win = Windows
+
 bnot = bit.bnot
 shl  = bit.lshift
 shr  = bit.rshift
@@ -91,14 +99,6 @@ ptr   = glue.ptr
 
 inherit = glue.inherit
 object  = glue.object
-
-Windows = false
-Linux = false
-OSX = false
-BSD = false
-POSIX = false
-_G[ffi.os] = true
-win = Windows
 
 --dump standard library keywords for syntax highlighting.
 
