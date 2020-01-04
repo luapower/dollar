@@ -7,8 +7,13 @@ glue = require'glue'
 time = require'time'
 pp = require'pp'
 
-glue.update(_G, math)
-glue.update(_G, table)
+local function import(t)
+	for k,v in pairs(t) do
+		rawset(_G, k, v) --compat. with strict.lua
+	end
+end
+import(math)
+import(table)
 
 cocreate = coroutine.create
 cowrap = coroutine.wrap
