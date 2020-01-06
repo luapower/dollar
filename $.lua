@@ -104,6 +104,9 @@ ptr   = glue.ptr
 
 inherit = glue.inherit
 object  = glue.object
+before   = glue.before
+after    = glue.after
+override = glue.override
 
 --dump standard library keywords for syntax highlighting.
 
