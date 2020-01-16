@@ -66,6 +66,9 @@ xor  = bit.bxor
 
 memoize     = glue.memoize
 
+noop = glue.noop
+pass = glue.pass
+
 update      = glue.update
 merge       = glue.merge
 attr        = glue.attr
