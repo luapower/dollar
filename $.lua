@@ -31,19 +31,11 @@ pop = table.remove
 
 traceback = debug.traceback
 
+time.install() --replace os.date and os.time.
 date = os.date
+clock = os.clock
 sleep = time.sleep
-local os_time = os.time
-local time_time = time.time
-local time_clock = time.clock
-function time(t)
-	if not t then return time_time() end
-	return os_time(t)
-end
-local t0 = time_clock()
-function clock()
-	return time_clock() - t0
-end
+time = glue.time --replace time module with the uber-time function.
 
 exit = os.exit
 
