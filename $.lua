@@ -74,6 +74,7 @@ indexof = glue.indexof
 append  = glue.append
 extend  = glue.extend
 
+module    = glue.module
 autoload  = glue.autoload
 
 canopen   = glue.canopen
@@ -92,6 +93,7 @@ string.esc     = glue.esc
 esc            = glue.esc --because it's used with constants mostly.
 string.fromhex = glue.fromhex
 string.tohex   = glue.tohex
+string.subst   = glue.subst
 
 shift = glue.shift
 addr  = glue.addr
