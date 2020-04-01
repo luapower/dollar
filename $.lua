@@ -1,65 +1,35 @@
 
 --seriously, there's no reason for all that qualifying of everything.
 
-ffi = require'ffi'
-bit = require'bit'
+ffi  = require'ffi'
+bit  = require'bit'
 glue = require'glue'
 time = require'time'
-pp = require'pp'
+pp   = require'pp'
 
-local function import(t)
-	for k,v in pairs(t) do
-		rawset(_G, k, v) --compat. with strict.lua
-	end
-end
-import(math)
-import(table)
+floor       = math.floor
+ceil        = math.ceil
+min         = math.min
+max         = math.max
+abs         = math.abs
+sqrt        = math.sqrt
+random      = math.random
+randomseed  = math.randomseed
 
-cocreate = coroutine.create
-cowrap = coroutine.wrap
-resume = coroutine.resume
-yield = coroutine.yield
-
-format = string.format
-_ = string.format
-rep = string.rep --because it's used with constants mostly
-char = string.char
-
-add = table.insert
-push = table.insert
-pop = table.remove
-
-traceback = debug.traceback
-
-time.install() --replace os.date and os.time.
-date = os.date
-clock = os.clock
-sleep = time.sleep
-time = glue.time --replace time module with the uber-time function.
-
-exit = os.exit
-
-cast = ffi.cast
-
-Windows = false
-Linux   = false
-OSX     = false
-BSD     = false
-POSIX   = false
-_G[ffi.os] = true
-win = Windows
-
-bnot = bit.bnot
-shl  = bit.lshift
-shr  = bit.rshift
-band = bit.band
-bor  = bit.bor
-xor  = bit.bxor
-
-memoize     = glue.memoize
-
-noop = glue.noop
-pass = glue.pass
+concat      = table.concat
+insert      = table.insert
+remove      = table.remove
+shift       = glue.shift
+add         = table.insert
+push        = table.insert
+pop         = table.remove
+append      = glue.append
+extend      = glue.extend
+sort        = table.sort
+indexof     = glue.indexof
+map         = glue.map
+pack        = glue.pack
+unpack      = glue.unpack
 
 update      = glue.update
 merge       = glue.merge
@@ -68,42 +38,77 @@ count       = glue.count
 index       = glue.index
 keys        = glue.keys
 sortedpairs = glue.sortedpairs
-map         = glue.map
 
-indexof = glue.indexof
-append  = glue.append
-extend  = glue.extend
-
-module    = glue.module
-autoload  = glue.autoload
-
-canopen   = glue.canopen
-readfile  = glue.readfile
-writefile = glue.writefile
-readpipe  = glue.readpipe
-
-pack   = glue.pack
-unpack = glue.unpack
+--make these globals because they're usually used with a string literal as arg#1.
+format      = string.format
+_           = string.format
+rep         = string.rep
+char        = string.char
+esc         = glue.esc
 
 string.starts  = glue.starts
 string.ends    = glue.ends
 string.trim    = glue.trim
 string.lines   = glue.lines
 string.esc     = glue.esc
-esc            = glue.esc --because it's used with constants mostly.
 string.fromhex = glue.fromhex
 string.tohex   = glue.tohex
 string.subst   = glue.subst
 
-shift = glue.shift
-addr  = glue.addr
-ptr   = glue.ptr
+cocreate    = coroutine.create
+cowrap      = coroutine.wrap
+resume      = coroutine.resume
+yield       = coroutine.yield
 
-inherit = glue.inherit
-object  = glue.object
+noop     = glue.noop
+pass     = glue.pass
+
+memoize  = glue.memoize
+
+bnot = bit.bnot
+shl  = bit.lshift
+shr  = bit.rshift
+band = bit.band
+bor  = bit.bor
+xor  = bit.bxor
+
+cast    = ffi.cast
+Windows = false
+Linux   = false
+OSX     = false
+BSD     = false
+POSIX   = false
+_G[ffi.os] = true
+win     = Windows
+addr    = glue.addr
+ptr     = glue.ptr
+
+module    = glue.module
+autoload  = glue.autoload
+
+inherit  = glue.inherit
+object   = glue.object
 before   = glue.before
 after    = glue.after
 override = glue.override
+
+traceback = debug.traceback
+
+--OS API bindings
+
+date  = os.date
+clock = os.clock
+time.install() --replace os.date and os.time.
+sleep = time.sleep
+time  = glue.time --replace time module with the uber-time function.
+
+canopen   = glue.canopen
+readfile  = glue.readfile
+writefile = glue.writefile
+
+readpipe  = glue.readpipe
+
+exit = os.exit
 
 --dump standard library keywords for syntax highlighting.
 
