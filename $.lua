@@ -101,6 +101,9 @@ clock = os.clock
 time.install() --replace os.date and os.time.
 sleep = time.sleep
 time  = glue.time --replace time module with the uber-time function.
+day   = glue.day
+month = glue.month
+year  = glue.year
 
 canopen   = glue.canopen
 readfile  = glue.readfile
