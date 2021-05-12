@@ -6,6 +6,7 @@ bit  = require'bit'
 glue = require'glue'
 time = require'time'
 pp   = require'pp'
+pr   = require'inspect'
 
 floor       = math.floor
 ceil        = math.ceil
@@ -108,6 +109,7 @@ before   = glue.before
 after    = glue.after
 override = glue.override
 
+trace = function() print(debug.traceback()) end
 traceback = debug.traceback
 
 --OS API bindings
