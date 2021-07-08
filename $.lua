@@ -14,6 +14,7 @@ min         = math.min
 max         = math.max
 abs         = math.abs
 sqrt        = math.sqrt
+ln          = math.log
 sin         = math.sin
 cos         = math.cos
 tan         = math.tan
@@ -24,8 +25,11 @@ randomseed  = math.randomseed
 clamp       = glue.clamp
 round       = glue.round
 lerp        = glue.lerp
+sign        = glue.sign
+strict_sign = glue.strict_sign
 
 concat      = table.concat
+catargs     = glue.catargs
 insert      = table.insert
 remove      = table.remove
 shift       = glue.shift
@@ -54,6 +58,7 @@ sortedpairs = glue.sortedpairs
 
 --make these globals because they're usually used with a string literal as arg#1.
 format      = string.format
+fmt         = string.format
 _           = string.format
 rep         = string.rep
 char        = string.char
