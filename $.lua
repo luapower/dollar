@@ -1,5 +1,5 @@
 
---seriously, there's no reason for all that qualifying of everything.
+--seriously, there's no need for all that qualifying of everything.
 
 ffi  = require'ffi'
 bit  = require'bit'
@@ -27,6 +27,8 @@ round       = glue.round
 lerp        = glue.lerp
 sign        = glue.sign
 strict_sign = glue.strict_sign
+nextpow2    = glue.nextpow2
+repl        = glue.repl
 
 concat      = table.concat
 catargs     = glue.catargs
