@@ -29,7 +29,6 @@ sign        = glue.sign
 strict_sign = glue.strict_sign
 nextpow2    = glue.nextpow2
 repl        = glue.repl
-names       = glue.names
 
 concat      = table.concat
 catargs     = glue.catargs
@@ -67,6 +66,7 @@ rep         = string.rep
 char        = string.char
 esc         = glue.esc
 subst       = glue.subst
+names       = glue.names
 
 string.starts  = glue.starts
 string.ends    = glue.ends
