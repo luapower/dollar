@@ -1,5 +1,5 @@
 
---seriously, there's no need for all that qualifying of everything.
+-- "Seriously, there's no need for all that qualifying of everything" - Fartman
 
 ffi  = require'ffi'
 bit  = require'bit'
@@ -101,6 +101,8 @@ xor  = bit.bxor
 
 C       = ffi.C
 cast    = ffi.cast
+sizeof  = ffi.sizeof
+typeof  = ffi.typeof
 Windows = false
 Linux   = false
 OSX     = false
@@ -160,3 +162,9 @@ if not ... then
 	sort(t)
 	print(concat(t, ' '))
 end
+
+return {with = function(s)
+	for _,s in ipairs(names(s)) do
+		require('$'..s)
+	end
+end}
