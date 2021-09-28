@@ -17,7 +17,7 @@ require'$'
 local errors = require'errors'
 
 verbose = false
-logtofile = noop --fw. decl.
+logtofile = noop --implemented outside.
 
 function log(severity, topic, action, fmt, ...)
 	if severity == '' and not verbose then return end
@@ -51,4 +51,3 @@ function check(errorclass, action, v, ...)
 	e.logged = true --prevent duplicate logging of the error on a catch-all handler.
 	errors.raise(e)
 end
-

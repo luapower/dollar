@@ -24,6 +24,7 @@ random      = math.random
 randomseed  = math.randomseed
 clamp       = glue.clamp
 round       = glue.round
+snap        = glue.snap
 lerp        = glue.lerp
 sign        = glue.sign
 strict_sign = glue.strict_sign
@@ -49,13 +50,18 @@ indexof     = glue.indexof
 map         = glue.map
 pack        = glue.pack
 unpack      = glue.unpack
+reverse     = glue.reverse
+binsearch   = glue.binsearch
+sortedarray = glue.sortedarray
 
+empty       = glue.empty
 update      = glue.update
 merge       = glue.merge
 attr        = glue.attr
 count       = glue.count
 index       = glue.index
 keys        = glue.keys
+sortedkeys  = glue.sortedkeys
 sortedpairs = glue.sortedpairs
 
 --make these globals because they're usually used with a string literal as arg#1.
@@ -75,10 +81,13 @@ string.pad     = glue.pad
 string.lpad    = glue.lpad
 string.rpad    = glue.rpad
 string.lines   = glue.lines
+string.outdent = glue.outdent
 string.esc     = glue.esc
 string.fromhex = glue.fromhex
 string.tohex   = glue.tohex
 string.subst   = glue.subst
+
+collect = glue.collect
 
 cocreate    = coroutine.create
 cowrap      = coroutine.wrap
@@ -88,7 +97,10 @@ yield       = coroutine.yield
 noop     = glue.noop
 pass     = glue.pass
 
-memoize  = glue.memoize
+memoize    = glue.memoize
+tuple      = glue.tuple
+tuples     = glue.tuples
+weaktuples = glue.weaktuples
 
 assertf  = glue.assert
 
@@ -121,6 +133,7 @@ object   = glue.object
 before   = glue.before
 after    = glue.after
 override = glue.override
+gettersandsetters = glue.gettersandsetters
 
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback
@@ -137,13 +150,26 @@ sunday = glue.sunday
 month  = glue.month
 year   = glue.year
 
-canopen   = glue.canopen
-readfile  = glue.readfile
-writefile = glue.writefile
+canopen     = glue.canopen
+readfile    = glue.readfile
+writefile   = glue.writefile
+replacefile = glue.replacefile
+readpipe    = glue.readpipe
 
-readpipe  = glue.readpipe
+fpcall = glue.fpcall
+fcall  = glue.fcall
 
 exit = os.exit
+
+freelist = glue.freelist
+
+i8p = glue.i8p
+i8a = glue.i8a
+u8p = glue.u8p
+u8a = glue.u8a
+
+buffer   = glue.buffer
+dynarray = glue.dynarray
 
 --dump standard library keywords for syntax highlighting.
 
