@@ -1,12 +1,13 @@
 
 -- "Seriously, there's no need for all that qualifying of everything" - Fartman
 
-ffi  = require'ffi'
-bit  = require'bit'
-glue = require'glue'
-time = require'time'
-pp   = require'pp'
-pr   = require'inspect'
+ffi    = require'ffi'
+bit    = require'bit'
+glue   = require'glue'
+errors = require'errors'
+time   = require'time'
+pp     = require'pp'
+pr     = require'inspect'
 
 floor       = math.floor
 ceil        = math.ceil
@@ -140,9 +141,9 @@ traceback = debug.traceback
 
 --OS API bindings
 
+time.install() --replace os.date, os.time and os.clock.
 date   = os.date
 clock  = os.clock
-time.install() --replace os.date and os.time.
 sleep  = time.sleep
 time   = glue.time --replace time module with the uber-time function.
 day    = glue.day

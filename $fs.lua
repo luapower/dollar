@@ -21,6 +21,8 @@
 require'$'
 require'$log'
 
+fs = require'fs'
+
 --make a path by combining dir and file.
 function indir(dir, file)
 	if dir == '.' then dir = nil end

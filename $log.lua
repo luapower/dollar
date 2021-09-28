@@ -14,7 +14,6 @@
 ]]
 
 require'$'
-local errors = require'errors'
 
 verbose = false
 logtofile = noop --implemented outside.
@@ -51,3 +50,4 @@ function check(errorclass, action, v, ...)
 	e.logged = true --prevent duplicate logging of the error on a catch-all handler.
 	errors.raise(e)
 end
+
