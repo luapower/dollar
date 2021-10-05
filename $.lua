@@ -136,6 +136,13 @@ after    = glue.after
 override = glue.override
 gettersandsetters = glue.gettersandsetters
 
+local lua_print = print
+function print(...)
+	lua_print(...)
+	io.stdout:flush()
+	return ...
+end
+
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback
 
@@ -172,12 +179,33 @@ u8a = glue.u8a
 buffer   = glue.buffer
 dynarray = glue.dynarray
 
+--stubs, implemented in $log
+log        = log      or noop
+note       = note     or noop
+nolog      = nolog    or noop
+warnif     = warnif   or noop
+logerror   = logerror or noop
+dbg        = dbg      or noop
+debug.args = debug.args or pass
+
+function check(errorclass, event, v, ...)
+	if v then return v end
+	assert(type(errorclass) == 'string' or errors.is(errorclass))
+	assert(type(event) == 'string')
+	local e = errors.new(errorclass, ...)
+	if not e.logged then
+		logerror(e.classname, event, e.message)
+		e.logged = true --prevent duplicate logging of the error on a catch-all handler.
+	end
+	errors.raise(e)
+end
+
 --dump standard library keywords for syntax highlighting.
 
 if not ... then
 	local t = {}
 	for k,v in pairs(_G) do
-		if k ~= 'type' then
+		if k ~= 'type' then --reused too much, don't like it colored.
 			t[#t+1] = k
 			if type(v) == 'table' and v ~= _G and v ~= arg then
 				for kk in pairs(v) do
