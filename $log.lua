@@ -1,4 +1,4 @@
---[[
+ --[[
 
 	$ | logging and error checking.
 
@@ -117,12 +117,11 @@ function log(severity, module, event, fmt, ...)
 	end
 	io.stderr:write(entry)
 	io.stderr:flush()
-	return ...
 end
 
-function note(...) return log('note', ...) end
-function nolog(...) return log('', ...) end
-function dbg(...) return log('', ...) end
+function note (...) log('note', ...) end
+function nolog(...) log('', ...) end
+function dbg  (...) log('', ...) end
 
 function warnif(module, event, cond, ...)
 	if not cond then return end
@@ -143,6 +142,6 @@ if not ... then
 	local t1 = coroutine.create(function() end)
 	local t2 = coroutine.create(function() end)
 
-	dbg('test', '%s %s %s %s\nanother thing', s1, s2, t1, t2)
+	dbg('test', 'test', '%s %s %s %s\nanother thing', s1, s2, t1, t2)
 
 end
