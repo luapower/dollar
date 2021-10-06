@@ -8,10 +8,12 @@
 	dbg(module, event, fmt, ...)
 	warnif(module, event, condition, fmt, ...)
 	logerror(module, event, fmt, ...)
-	debug.args(...) -> ...
 
-	logging.env <- 'dev' | 'prod', etc.
+	logging.args(...) -> ...
+
+	debug.env <- 'dev' | 'prod', etc.
 	logging.filter <- {severity->true}
+
 	logging:tofile(logfile, max_disk_size)
 	logging:toserver(host, port, queue_size, timeout)
 
