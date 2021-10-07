@@ -183,9 +183,9 @@ dynarray = glue.dynarray
 log        = log      or noop
 note       = note     or noop
 nolog      = nolog    or noop
+dbg        = dbg      or noop
 warnif     = warnif   or noop
 logerror   = logerror or noop
-dbg        = dbg      or noop
 debug.args = debug.args or pass
 
 function check(errorclass, event, v, ...)
