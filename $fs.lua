@@ -19,8 +19,6 @@
 ]]
 
 require'$'
-require'$log'
-
 fs = require'fs'
 
 --make a path by combining dir and file.
