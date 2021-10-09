@@ -78,7 +78,7 @@ end
 
 function touch(file, mtime, btime, silent) --create file or update its mtime.
 	if not silent then
-		nolog('fs', 'touch', '%s to %s%s', file,
+		dbg('fs', 'touch', '%s to %s%s', file,
 			date('%d-%m-%Y %H:%M', mtime) or 'now',
 			btime and ', btime '..date('%d-%m-%Y %H:%M', btime) or '')
 	end
@@ -129,7 +129,7 @@ function dir(path, patt, min_mtime, create, desc, order_by)
 	if desc then
 		glue.reverse(t)
 	end
-	nolog('fs', 'dir', '%-20s %5d files%s%s', path,
+	dbg('fs', 'dir', '%-20s %5d files%s%s', path,
 		#t,
 		patt and '\n  match: '..patt or '',
 		min_mtime and '\n  mtime >= '..date('%d-%m-%Y %H:%M', min_mtime) or '')

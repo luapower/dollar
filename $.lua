@@ -182,7 +182,6 @@ dynarray = glue.dynarray
 --stubs, implemented in $log
 log        = log      or noop
 note       = note     or noop
-nolog      = nolog    or noop
 dbg        = dbg      or noop
 warnif     = warnif   or noop
 logerror   = logerror or noop

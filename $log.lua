@@ -4,7 +4,6 @@
 
 	log(severity, module, event, fmt, ...)
 	note(module, event, fmt, ...)
-	nolog(module, event, fmt, ...)
 	dbg(module, event, fmt, ...)
 	warnif(module, event, condition, fmt, ...)
 	logerror(module, event, fmt, ...)
@@ -24,7 +23,6 @@ logging = require'logging'
 
 log      = logging.log
 note     = logging.note
-nolog    = logging.nolog
 dbg      = logging.dbg
 warnif   = logging.warnif
 logerror = logging.logerror
