@@ -9,7 +9,7 @@
 	warnif(module, event, condition, fmt, ...)
 	logerror(module, event, fmt, ...)
 
-	logging.args(...) -> ...
+	logargs(...) -> ...
 
 	debug.env <- 'dev' | 'prod', etc.
 	logging.filter <- {severity->true}
@@ -28,4 +28,4 @@ nolog    = logging.nolog
 dbg      = logging.dbg
 warnif   = logging.warnif
 logerror = logging.logerror
-
+logargs  = logging.args

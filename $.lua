@@ -186,7 +186,7 @@ nolog      = nolog    or noop
 dbg        = dbg      or noop
 warnif     = warnif   or noop
 logerror   = logerror or noop
-debug.args = debug.args or pass
+logargs    = logargs  or pass
 
 function check(errorclass, event, v, ...)
 	if v then return v end
