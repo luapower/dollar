@@ -136,12 +136,16 @@ after    = glue.after
 override = glue.override
 gettersandsetters = glue.gettersandsetters
 
-local lua_print = print
-function print(...)
-	lua_print(...)
-	io.stdout:flush()
-	return ...
+local function print_func(print)
+	return function(...)
+		print(unpack(map(pack(...), logargs)))
+		io.stdout:flush()
+		return ...
+	end
 end
+print = print_func(print)
+pp    = print_func(pp)
+pr    = print_func(pr)
 
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback
