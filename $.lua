@@ -49,6 +49,7 @@ extend      = glue.extend
 sort        = table.sort
 indexof     = glue.indexof
 map         = glue.map
+imap        = glue.imap
 pack        = glue.pack
 unpack      = glue.unpack
 reverse     = glue.reverse
@@ -138,7 +139,7 @@ gettersandsetters = glue.gettersandsetters
 
 local function print_func(print)
 	return function(...)
-		print(unpack(map(pack(...), logargs)))
+		print(unpack(imap(pack(...), logargs)))
 		io.stdout:flush()
 		return ...
 	end
