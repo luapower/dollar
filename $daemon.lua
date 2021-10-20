@@ -54,10 +54,14 @@ function daemon(...)
 		pcall(require, app_name..'_conf')
 	end
 
-	function cmd.help()
-		print'Commands:'
-		for k,v in sortedpairs(cmd) do
-			print('', k)
+	function cmd.help(usage)
+		if usage then
+			io.stderr:write('Usage: '..app_name..' '..usage..'\n')
+		else
+			print'Commands:'
+			for k,v in sortedpairs(cmd) do
+				print('', (k:gsub('_', '-')))
+			end
 		end
 	end
 
@@ -65,6 +69,7 @@ function daemon(...)
 		app:init()
 		local s = ... or 'help'
 		local cmd = s and cmd[s:gsub('-', '_')] or cmd.help
+		logging.quiet = true
 		return cmd(select(2, ...))
 	end
 
