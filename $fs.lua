@@ -4,10 +4,11 @@
 
 	indir(dir, file)
 	exists(file)
+	checkexists(file)
 	rm(path)
 	mv(old_path, new_path)
 	mkdir(path)
-	load(path)
+	load(path, default)
 	save(s, path)
 	cp(src_file, dst_file)
 	exec(path)
@@ -34,6 +35,10 @@ function exists(file)
 	return is
 end
 
+function checkexists(file)
+	check('fs', 'exists', exists(file), 'file missing: %s', file)
+end
+
 function rm(path)
 	note('fs', 'rm', '%s', path)
 	local ok, err = os.remove(path)
@@ -56,7 +61,8 @@ function mkdir(path)
 end
 
 --NOTE: shamelessly changing built-in load() that we never use.
-function load(path) --load a file into a string.
+function load(path, default) --load a file into a string.
+	if default ~= nil and not exists(path) then return default end
 	return check('fs', 'load', readfile(path))
 end
 
