@@ -12,6 +12,7 @@
 	cp(src_file, dst_file)
 	exec(path)
 	touch(file, mtime, btime, silent)
+	chmod(file, perms)
 	mtime(file)
 	dir(path, patt, min_mtime, create, desc, order_by)
 	gen_id(name[, start]) -> n
@@ -93,6 +94,12 @@ function touch(file, mtime, btime, silent) --create file or update its mtime.
 		btime = btime or nil,
 	})
 	check('fs', 'touch', ok, 'could not set mtime/btime for %s: %s', file, err)
+end
+
+function chmod(file, perms)
+	note('fs', 'chmod', '%s', file)
+	local ok, err = fs.attr(file, {perms = perms})
+	check('fs', 'chmod', ok, 'could not set perms for %s: %s', file, err)
 end
 
 function mtime(file)

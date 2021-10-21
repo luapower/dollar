@@ -151,8 +151,6 @@ pr    = print_func(pr)
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback
 
---OS API bindings
-
 time.install() --replace os.date, os.time and os.clock.
 date   = os.date
 clock  = os.clock
@@ -192,6 +190,8 @@ warnif     = warnif   or noop
 logerror   = logerror or noop
 logargs    = logargs  or pass
 
+raise = errors.raise
+
 function check(errorclass, event, v, ...)
 	if v then return v end
 	assert(type(errorclass) == 'string' or errors.is(errorclass))
@@ -201,7 +201,7 @@ function check(errorclass, event, v, ...)
 		logerror(e.classname, event, e.message)
 		e.logged = true --prevent duplicate logging of the error on a catch-all handler.
 	end
-	errors.raise(e)
+	raise(e)
 end
 
 --dump standard library keywords for syntax highlighting.
