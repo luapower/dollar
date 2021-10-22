@@ -32,7 +32,7 @@ function daemon(...)
 		local base_dir = exe_dir..(ffi.abi'win' and [[\..\..]] or '/../..')
 		check('fs', 'cd', fs.cd(base_dir), 'could not change dir to %s', base_dir)
 
-		var_dir = var_dir or base_dir
+		var_dir = var_dir or indir(base_dir, app_name..'-var')
 		tmp_dir = tmp_dir or indir('tmp', app_name)
 
 		mkdir(var_dir)
