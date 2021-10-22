@@ -41,7 +41,8 @@ end
 
 function rm(path)
 	note('fs', 'rm', '%s', path)
-	local ok, err = os.remove(path)
+	local ok, err = fs.remove(path)
+	if err == 'not_found' then ok = true end
 	check('fs', 'rm', ok, 'could not remove file %s: %s', path, err)
 end
 
