@@ -24,20 +24,12 @@ function daemon(...)
 	local app = {}
 	cmd = {}
 
-	if not arg[0] then --loaded with require()
-		app_name = assert(app_name or ...) --app module name received as arg#1
-		return app
-	else --loaded from cmdline
-		app_name = assert(app_name or arg[0]:match'([^/\\%.]+)%.?[^%.]*$')
-		--consider this module loaded so that other app submodules that
-		--require it at runtime don't try to load it again.
-		package.loaded[app_name] = app
-	end
-
 	function app:init()
+		app.init = noop
+
 		--cd to base_dir so that we can use relative paths for everything.
 		local exe_dir = fs.exedir()
-		local base_dir = exe_dir..'/../..'
+		local base_dir = exe_dir..(ffi.abi'win' and [[\..\..]] or '/../..')
 		check('fs', 'cd', fs.cd(base_dir), 'could not change dir to %s', base_dir)
 
 		var_dir = var_dir or base_dir
@@ -71,6 +63,16 @@ function daemon(...)
 		local cmd = s and cmd[s:gsub('-', '_')] or cmd.help
 		logging.quiet = true
 		return cmd(select(2, ...))
+	end
+
+	if not arg[0] then --caller module loaded with require().
+		app_name = assert(app_name or (...)) --app module name received as arg#1
+	else --caller module loaded from cmdline (as main script).
+		app_name = assert(app_name or arg[0]:match'([^/\\%.]+)%.?[^%.]*$')
+		--consider this module loaded so that other app submodules that
+		--require it at runtime don't try to load it again.
+		package.loaded[app_name] = app
+		app:init()
 	end
 
 	return app

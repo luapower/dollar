@@ -22,11 +22,11 @@
 
 require'$'
 fs = require'fs'
+path = require'path'
 
 --make a path by combining dir and file.
 function indir(dir, file)
-	if dir == '.' then dir = nil end
-	return dir and file and dir..'/'..file or file or dir
+	return check('fs', 'indir', path.combine(dir, file))
 end
 
 function exists(file)

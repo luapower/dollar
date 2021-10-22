@@ -137,6 +137,7 @@ after    = glue.after
 override = glue.override
 gettersandsetters = glue.gettersandsetters
 
+local lua_print = print
 local function print_func(print)
 	return function(...)
 		print(unpack(imap(pack(...), logargs)))
