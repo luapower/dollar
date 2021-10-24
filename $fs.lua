@@ -9,7 +9,7 @@
 	mv(old_path, new_path)
 	mkdir(path)
 	load(path, default)
-	save(s, path)
+	save(path, s, [mode])
 	cp(src_file, dst_file)
 	exec(path)
 	touch(file, mtime, btime, silent)
@@ -67,9 +67,10 @@ function load(path, default) --load a file into a string.
 	return check('fs', 'load', readfile(path))
 end
 
-function save(s, path) --save a string or a Lua value to a file.
-	note('fs', 'save', '%s (%d bytes)', path, #s)
-	local ok, err = writefile(path, s, nil, path..'.tmp')
+function save(path, s, mode) --save a string or a Lua value to a file.
+	note('fs', 'save', '%s (%s %s)', path,
+		mode or 'w', isstr(s) and #s..' bytes' or type(s))
+	local ok, err = glue.writefile(path, s, mode)
 	check('fs', 'save', ok, 'could not save file %s: %s', path, err)
 end
 
@@ -78,10 +79,10 @@ function cp(src_file, dst_file)
 	save(load(src_file), dst_file)
 end
 
-function exec(path) --exec/wait program and get its stdout into a string.
-	note('fs', 'exec', '%s', path)
-	local s, err = readpipe(path)
-	return check('fs', 'exec', s, 'could not exec file %s: %s', path, err)
+function exec(cmd) --exec/wait program and get its stdout into a string.
+	note('fs', 'exec', '%s', cmd)
+	local s, err = glue.readpipe(cmd)
+	return check('fs', 'exec', s, 'could not exec `%s`: %s', cmd, err)
 end
 
 function touch(file, mtime, btime, silent) --create file or update its mtime.

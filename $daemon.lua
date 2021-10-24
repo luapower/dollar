@@ -25,7 +25,6 @@ function daemon(...)
 	cmd = {}
 
 	function app:init()
-		app.init = noop
 
 		--cd to base_dir so that we can use relative paths for everything.
 		local exe_dir = fs.exedir()
@@ -44,25 +43,45 @@ function daemon(...)
 
 		--require an optional config file.
 		pcall(require, app_name..'_conf')
+
+		return self
 	end
 
 	function cmd.help(usage)
 		if usage then
 			io.stderr:write('Usage: '..app_name..' '..usage..'\n')
 		else
+			print'Options:'
+			print('   -v   verbose')
+			print('   -d   debug')
 			print'Commands:'
 			for k,v in sortedpairs(cmd) do
-				print('', (k:gsub('_', '-')))
+				print('   '..(k:gsub('_', '-')))
 			end
 		end
 	end
 
+	function app:run_cmd(f, ...)
+		return f(...)
+	end
+
 	function app:run(...)
-		app:init()
-		local s = ... or 'help'
-		local cmd = s and cmd[s:gsub('-', '_')] or cmd.help
-		logging.quiet = true
-		return cmd(select(2, ...))
+		logging.verbose = app_name
+		local i = 1
+		local f
+		while true do
+			local s = select(i, ...)
+			i = i + 1
+			if s == '-v' then
+				logging.verbose = true
+			elseif s == '-d' then
+				logging.debug = true
+			else
+				f = s and cmd[s:gsub('-', '_')] or cmd.help
+				break
+			end
+		end
+		return self:run_cmd(f, select(i, ...))
 	end
 
 	if not arg[0] then --caller module loaded with require().
@@ -72,10 +91,8 @@ function daemon(...)
 		--consider this module loaded so that other app submodules that
 		--require it at runtime don't try to load it again.
 		package.loaded[app_name] = app
-		app:init()
 	end
 
 	return app
 
 end
-

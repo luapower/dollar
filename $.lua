@@ -9,6 +9,9 @@ time   = require'time'
 pp     = require'pp'
 pr     = require'inspect'
 
+isstr = function(s) return type(s) == 'string' end
+isnum = function(s) return type(s) == 'number' end
+
 floor       = math.floor
 ceil        = math.ceil
 min         = math.min
@@ -137,7 +140,7 @@ after    = glue.after
 override = glue.override
 gettersandsetters = glue.gettersandsetters
 
-local lua_print = print
+lua_print = print
 local function print_func(print)
 	return function(...)
 		print(unpack(imap(pack(...), logargs)))
