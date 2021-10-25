@@ -76,7 +76,7 @@ end
 
 function cp(src_file, dst_file)
 	note('fs', 'cp', '1. %s ->\n2. %s', src_file, dst_file)
-	save(load(src_file), dst_file)
+	save(dst_file, load(src_file))
 end
 
 function exec(cmd) --exec/wait program and get its stdout into a string.
@@ -92,7 +92,7 @@ function touch(file, mtime, btime, silent) --create file or update its mtime.
 			btime and ', btime '..date('%d-%m-%Y %H:%M', btime) or '')
 	end
 	if not exists(file) then
-		save('', file)
+		save(file, '')
 		if not (mtime or btime) then
 			return
 		end
@@ -166,13 +166,13 @@ end
 function gen_id(name, start)
 	local next_id_file = indir(var_dir, 'next_'..name)
 	if not exists(next_id_file) then
-		save(tostring(start or 1), next_id_file)
+		save(next_id_file, tostring(start or 1))
 	else
 		touch(next_id_file)
 	end
 	local n = tonumber(load(next_id_file))
 	check('fs', 'gen_id', toid(n, next_id_file))
-	save(tostring(n + 1), next_id_file)
+	save(next_id_file, tostring(n + 1))
 	note ('fs', 'gen_id', '%s: %d', name, n)
 	return n
 end
