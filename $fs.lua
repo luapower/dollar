@@ -81,8 +81,14 @@ end
 
 function exec(cmd) --exec/wait program and get its stdout into a string.
 	note('fs', 'exec', '%s', cmd)
+	local ok, err = os.execute(cmd)
+	return check('fs', 'exec', ok, 'could not exec `%s`: %s', cmd, err)
+end
+
+function readpipe(cmd) --exec/wait program and get its stdout into a string.
+	note('fs', 'readpipe', '%s', cmd)
 	local s, err = glue.readpipe(cmd)
-	return check('fs', 'exec', s, 'could not exec `%s`: %s', cmd, err)
+	return check('fs', 'readpipe', s, 'could not exec `%s`: %s', cmd, err)
 end
 
 function touch(file, mtime, btime, silent) --create file or update its mtime.

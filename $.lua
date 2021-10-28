@@ -79,6 +79,9 @@ esc         = glue.esc
 subst       = glue.subst
 names       = glue.names
 
+--make these globals because they may be used as filters.
+trim        = glue.trim
+
 string.starts  = glue.starts
 string.ends    = glue.ends
 string.trim    = glue.trim
