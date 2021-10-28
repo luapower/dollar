@@ -11,7 +11,8 @@
 	load(path, default)
 	save(path, s, [mode])
 	cp(src_file, dst_file)
-	exec(path)
+	exec(cmd)
+	readpipe(cmd) -> s
 	touch(file, mtime, btime, silent)
 	chmod(file, perms)
 	mtime(file)
@@ -79,7 +80,7 @@ function cp(src_file, dst_file)
 	save(dst_file, load(src_file))
 end
 
-function exec(cmd) --exec/wait program and get its stdout into a string.
+function exec(cmd) --exec/wait program without redirecting its stdout/stderr.
 	note('fs', 'exec', '%s', cmd)
 	local ok, err = os.execute(cmd)
 	return check('fs', 'exec', ok, 'could not exec `%s`: %s', cmd, err)
