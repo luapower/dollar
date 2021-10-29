@@ -7,7 +7,6 @@ glue   = require'glue'
 errors = require'errors'
 time   = require'time'
 pp     = require'pp'
-pr     = require'inspect'
 
 isstr = function(s) return type(s) == 'string' end
 isnum = function(s) return type(s) == 'number' end
@@ -81,6 +80,7 @@ names       = glue.names
 
 --make these globals because they may be used as filters.
 trim        = glue.trim
+outdent     = glue.outdent
 
 string.starts  = glue.starts
 string.ends    = glue.ends

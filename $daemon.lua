@@ -19,33 +19,28 @@ require'$log'
 
 --init -----------------------------------------------------------------------
 
-function daemon(...)
+function daemon(app_name)
 
 	local app = {}
 	cmd = {}
 
-	function app:init()
+	_G.app_name = assert(app_name)
 
-		--cd to base_dir so that we can use relative paths for everything.
-		local exe_dir = fs.exedir()
-		local base_dir = exe_dir..(ffi.abi'win' and [[\..\..]] or '/../..')
-		check('fs', 'cd', fs.cd(base_dir), 'could not change dir to %s', base_dir)
+	--consider this module loaded so that other app submodules that
+	--require it at runtime don't try to load it again.
+	package.loaded[app_name] = app
 
-		var_dir = var_dir or indir(base_dir, app_name..'-var')
-		tmp_dir = tmp_dir or indir('tmp', app_name)
-
-		mkdir(var_dir)
-		mkdir(tmp_dir)
-
-		--open the logfile.
-		local logfile = indir(var_dir, app_name..'.log')
-		logging:tofile(logfile)
-
-		--require an optional config file.
-		pcall(require, app_name..'_conf')
-
-		return self
+	--cd to base_dir so that we can use relative paths for everything.
+	local base_dir = fs.exedir()
+	if not package.loaded.bundle_loader then
+		--standalone luajit exe. files are in luapower dir at ../..
+		base_dir = indir(indir(base_dir, '..'), '..')
 	end
+	_G.var_dir = rawget(_G, 'var_dir') or indir(base_dir, app_name..'-var')
+	_G.tmp_dir = rawget(_G, 'tmp_dir') or indir(indir(base_dir, 'tmp'), app_name)
+
+	--r:run_cmdequire an optional config file.
+	pcall(require, app_name..'_conf')
 
 	function cmd.help(usage)
 		if usage then
@@ -61,11 +56,24 @@ function daemon(...)
 		end
 	end
 
-	function app:run_cmd(f, ...)
+	function app:run_cmd(f, ...) --stub
 		return f(...)
 	end
 
 	function app:run(...)
+
+		if ... == app_name then --caller module loaded with require()
+			return app
+		end
+
+		check('fs', 'cd', fs.cd(base_dir), 'could not change dir to %s', base_dir)
+		mkdir(var_dir)
+		mkdir(tmp_dir)
+
+		--open the logfile.
+		local logfile = indir(var_dir, app_name..'.log')
+		logging:tofile(logfile)
+
 		logging.verbose = app_name
 		local i = 1
 		local f
@@ -82,15 +90,6 @@ function daemon(...)
 			end
 		end
 		return self:run_cmd(f, select(i, ...))
-	end
-
-	if not arg[0] then --caller module loaded with require().
-		app_name = assert(app_name or (...)) --app module name received as arg#1
-	else --caller module loaded from cmdline (as main script).
-		app_name = assert(app_name or arg[0]:match'([^/\\%.]+)%.?[^%.]*$')
-		--consider this module loaded so that other app submodules that
-		--require it at runtime don't try to load it again.
-		package.loaded[app_name] = app
 	end
 
 	return app
