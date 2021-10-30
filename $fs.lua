@@ -80,7 +80,8 @@ function cp(src_file, dst_file)
 	save(dst_file, load(src_file))
 end
 
-function exec(cmd) --exec/wait program without redirecting its stdout/stderr.
+function exec(fmt, ...) --exec/wait program without redirecting its stdout/stderr.
+	local cmd = fmt:format(...)
 	note('fs', 'exec', '%s', cmd)
 	local ok, err = os.execute(cmd)
 	return check('fs', 'exec', ok, 'could not exec `%s`: %s', cmd, err)

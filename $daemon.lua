@@ -3,11 +3,11 @@
 	Daemon API.
 	Written by Cosmin Apreutesei. Public Domain.
 
-	daemon(...) -> app
+	daemon(app_name) -> app
 
 	app_name     app codename (the name of your main Lua module).
 	debug.env    app environment ('dev').
-	<app_name>_conf.lua optional app config file loaded by the daemon() call.
+	APP_conf.lua optional app config file loaded by the daemon() call.
 	var_dir      r/w persistent data dir (base_dir).
 	tmp_dir      r/w persistent temp dir (base_dir/tmp/app_name).
 	cmd          {name->f} place to add command-line handlers.
