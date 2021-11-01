@@ -36,8 +36,8 @@ function daemon(app_name)
 		--standalone luajit exe. files are in luapower dir at ../..
 		base_dir = indir(indir(base_dir, '..'), '..')
 	end
-	_G.var_dir = rawget(_G, 'var_dir') or indir(base_dir, app_name..'-var')
-	_G.tmp_dir = rawget(_G, 'tmp_dir') or indir(indir(base_dir, 'tmp'), app_name)
+	_G.var_dir = rawget(_G, 'var_dir') or path.normalize(indir(base_dir, app_name..'-var'))
+	_G.tmp_dir = rawget(_G, 'tmp_dir') or path.normalize(indir(indir(base_dir, 'tmp'), app_name))
 
 	--r:run_cmdequire an optional config file.
 	pcall(require, app_name..'_conf')

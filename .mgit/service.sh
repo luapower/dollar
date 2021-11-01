@@ -1,3 +1,4 @@
+#!/bin/bash
 
 [ "$SERVICE" ] || { echo "\$SERVICE not set"; exit 1; }
 CMD="./luajit $SERVICE.lua"
@@ -15,7 +16,7 @@ main() {
 	if [ "$1" == start ]; then
 		running && { echo "Already running (pid $(cat $PID))."; return 1; }
 		[ -f "$PID" ] && { echo "Stale pid file found."; }
-		$CMD 2>&1 >> $LOG &
+		$CMD start 2>&1 >> $LOG &
 		echo "$!" > $PID
 		running && echo "Started. PID: $(cat $PID)." || { echo "Failed to start."; return 1; }
 	elif [ "$1" == stop ]; then
@@ -28,12 +29,12 @@ main() {
 		"$0" stop && "$0" start
 	elif [ ! "$1" -o "$1" == status ]; then
 		running && echo "Running. PID: $(cat $PID)." || echo "Not running."
-	elif [ "$1" == log ]; then
+	elif [ "$1" == see ]; then
 		tail -f $LOG 2>/dev/null
 	elif [ "$1" == fg ]; then
-		$CMD
+		exec $CMD
 	else
-		echo "Usage: $0 [start | stop | restart | status | log | fg]"
+		echo "Usage: $0 [start | stop | restart | status | see | fg]"
 	fi
 }
 
