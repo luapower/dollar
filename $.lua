@@ -77,6 +77,7 @@ char        = string.char
 esc         = glue.esc
 subst       = glue.subst
 names       = glue.names
+random_string = glue.random_string
 
 --make these globals because they may be used as filters.
 trim        = glue.trim
