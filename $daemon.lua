@@ -31,7 +31,7 @@ function daemon(app_name)
 	package.loaded[app_name] = app
 
 	--cd to base_dir so that we can use relative paths for everything.
-	local base_dir = fs.exedir()
+	local base_dir = exedir
 	if not package.loaded.bundle_loader then
 		--standalone luajit exe. files are in luapower dir at ../..
 		base_dir = indir(indir(base_dir, '..'), '..')
