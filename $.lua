@@ -155,8 +155,8 @@ local function print_func(print)
 	end
 end
 print = print_func(print)
-pp    = print_func(pp)
-pr    = print_func(pr)
+pp.print = print_func(pp.print)
+pr = print_func(pr)
 
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback
