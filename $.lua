@@ -1,12 +1,14 @@
 
 -- "Seriously, there's no need for all that qualifying of everything" - Fartman
 
-ffi    = require'ffi'
-bit    = require'bit'
-glue   = require'glue'
-errors = require'errors'
-time   = require'time'
-pp     = require'pp'
+ffi     = require'ffi'
+bit     = require'bit'
+glue    = require'glue'
+errors  = require'errors'
+time    = require'time'
+pp      = require'pp'
+exedir  = require'package.exedir'
+exepath = require'package.exepath'
 
 isstr = function(s) return type(s) == 'string' end
 isnum = function(s) return type(s) == 'number' end
