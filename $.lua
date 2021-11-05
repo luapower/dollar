@@ -176,6 +176,7 @@ fpcall = glue.fpcall
 fcall  = glue.fcall
 
 exit = os.exit
+env = os.getenv
 
 freelist = glue.freelist
 
