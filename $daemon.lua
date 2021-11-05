@@ -11,6 +11,8 @@
 	var_dir      r/w persistent data dir (base_dir).
 	tmp_dir      r/w persistent temp dir (base_dir/tmp/app_name).
 	cmd          {name->f} place to add command-line handlers.
+	wincmd       add Windows-only commands here.
+	lincmd       add Linux-only commands here.
 
 ]]
 
@@ -23,6 +25,8 @@ function daemon(app_name)
 
 	local app = {}
 	cmd = {}
+	wincmd = {}
+	lincmd = {}
 
 	_G.app_name = assert(app_name)
 
@@ -85,7 +89,11 @@ function daemon(app_name)
 			elseif s == '-d' then
 				logging.debug = true
 			else
-				f = s and cmd[s:gsub('-', '_')] or cmd.help
+				local c = s and s:gsub('-', '_')
+				f = c and cmd[c]
+					or (Windows and wincmd[c])
+					or (Linux   and lincmd[c])
+					or cmd.help
 				break
 			end
 		end

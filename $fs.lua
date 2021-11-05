@@ -11,8 +11,8 @@
 	load(path, default)
 	save(path, s, [mode])
 	cp(src_file, dst_file)
-	exec(cmd)
-	readpipe(cmd) -> s
+	exec(fmt,...)
+	readpipe(fmt,...) -> s
 	touch(file, mtime, btime, silent)
 	chmod(file, perms)
 	mtime(file)
@@ -87,7 +87,8 @@ function exec(fmt, ...) --exec/wait program without redirecting its stdout/stder
 	return check('fs', 'exec', ok, 'could not exec `%s`: %s', cmd, err)
 end
 
-function readpipe(cmd) --exec/wait program and get its stdout into a string.
+function readpipe(fmt, ...) --exec/wait program and get its stdout into a string.
+	local cmd = fmt:format(...)
 	note('fs', 'readpipe', '%s', cmd)
 	local s, err = glue.readpipe(cmd)
 	return check('fs', 'readpipe', s, 'could not exec `%s`: %s', cmd, err)
