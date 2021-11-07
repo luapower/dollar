@@ -51,8 +51,8 @@ function daemon(app_name)
 			io.stderr:write('Usage: '..app_name..' '..usage..'\n')
 		else
 			print'Options:'
-			print('   -v   verbose')
-			print('   -d   debug')
+			print('   -v       verbose')
+			print('   --debug  debug')
 			print'Commands:'
 			for k,v in sortedpairs(cmd) do
 				print('   '..(k:gsub('_', '-')))
@@ -86,8 +86,10 @@ function daemon(app_name)
 			i = i + 1
 			if s == '-v' then
 				logging.verbose = true
+				env('VERBOSE', 1)
 			elseif s == '-d' then
 				logging.debug = true
+				env('DEBUG', 1)
 			else
 				local c = s and s:gsub('-', '_')
 				f = c and cmd[c]
@@ -97,6 +99,9 @@ function daemon(app_name)
 				break
 			end
 		end
+		if env'DEBUG'   then logging.debug   = true end
+		if env'VERBOSE' then logging.verbose = true end
+
 		return self:run_cmd(f, select(i, ...))
 	end
 

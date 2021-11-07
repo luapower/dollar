@@ -11,19 +11,22 @@
 	load(path, default)
 	save(path, s, [mode])
 	cp(src_file, dst_file)
-	exec(fmt,...)
-	readpipe(fmt,...) -> s
 	touch(file, mtime, btime, silent)
 	chmod(file, perms)
 	mtime(file)
 	dir(path, patt, min_mtime, create, desc, order_by)
 	gen_id(name[, start]) -> n
 
+	exec(fmt,...)
+	readpipe(fmt,...) -> s
+	env(name, [val|false]) -> s
+
 ]]
 
 require'$'
 fs = require'fs'
 path = require'path'
+proc = require'proc'
 
 --make a path by combining dir and file.
 function indir(dir, file)
@@ -78,20 +81,6 @@ end
 function cp(src_file, dst_file)
 	note('fs', 'cp', '1. %s ->\n2. %s', src_file, dst_file)
 	save(dst_file, load(src_file))
-end
-
-function exec(fmt, ...) --exec/wait program without redirecting its stdout/stderr.
-	local cmd = fmt:format(...)
-	note('fs', 'exec', '%s', cmd)
-	local ok, err = os.execute(cmd)
-	return check('fs', 'exec', ok, 'could not exec `%s`: %s', cmd, err)
-end
-
-function readpipe(fmt, ...) --exec/wait program and get its stdout into a string.
-	local cmd = fmt:format(...)
-	note('fs', 'readpipe', '%s', cmd)
-	local s, err = glue.readpipe(cmd)
-	return check('fs', 'readpipe', s, 'could not exec `%s`: %s', cmd, err)
 end
 
 function touch(file, mtime, btime, silent) --create file or update its mtime.
@@ -163,6 +152,22 @@ function dir(path, patt, min_mtime, create, desc, order_by)
 		return t[i]
 	end
 end
+
+function exec(fmt, ...) --exec/wait program without redirecting its stdout/stderr.
+	local cmd = fmt:format(...)
+	note('fs', 'exec', '%s', cmd)
+	local ok, err = os.execute(cmd)
+	return check('fs', 'exec', ok, 'could not exec `%s`: %s', cmd, err)
+end
+
+function readpipe(fmt, ...) --exec/wait program and get its stdout into a string.
+	local cmd = fmt:format(...)
+	note('fs', 'readpipe', '%s', cmd)
+	local s, err = glue.readpipe(cmd)
+	return check('fs', 'readpipe', s, 'could not exec `%s`: %s', cmd, err)
+end
+
+env = proc.env
 
 --autoincrement ids ----------------------------------------------------------
 
