@@ -134,6 +134,9 @@ function daemon(app_name)
 		if env'DEBUG'   then logging.debug   = true end
 		if env'VERBOSE' then logging.verbose = true end
 
+		print('VERBOSE=', env'VERBOSE')
+		print('DEBUG=', env'DEBUG')
+
 		return self:run_cmd(f, select(i, ...))
 	end
 
