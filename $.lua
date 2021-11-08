@@ -97,6 +97,7 @@ string.esc     = glue.esc
 string.fromhex = glue.fromhex
 string.tohex   = glue.tohex
 string.subst   = glue.subst
+string.capitalize = glue.capitalize
 
 collect = glue.collect
 

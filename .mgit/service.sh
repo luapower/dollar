@@ -29,12 +29,12 @@ main() {
 		"$0" stop && "$0" start
 	elif [ ! "$1" -o "$1" == status ]; then
 		running && echo "Running. PID: $(cat $PID)." || echo "Not running."
-	elif [ "$1" == see ]; then
+	elif [ "$1" == tail ]; then
 		tail -f $LOG 2>/dev/null
-	elif [ "$1" == fg ]; then
+	elif [ "$1" == run ]; then
 		exec $CMD
 	else
-		echo "Usage: $0 [start | stop | restart | status | see | fg]"
+		echo "Usage: $0 [run | start | stop | restart | status | tail]"
 	fi
 }
 

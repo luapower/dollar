@@ -13,11 +13,30 @@
 	cmd          {name->f} place to add command-line handlers.
 	wincmd       add Windows-only commands here.
 	lincmd       add Linux-only commands here.
+	help         {cmd->s} help line for command.
+
+	say(s)
+	sayn(s)
+	die(s)
 
 ]]
 
 require'$fs'
 require'$log'
+
+function say(s)
+	io.stderr:write(s..'\n')
+	io.stderr:flush()
+end
+
+function sayn(s)
+	io.stderr:write(s)
+end
+
+function die(s)
+	say('ABORT: '..s)
+	os.exit(1)
+end
 
 --init -----------------------------------------------------------------------
 
@@ -27,6 +46,7 @@ function daemon(app_name)
 	cmd = {}
 	wincmd = {}
 	lincmd = {}
+	help = {}
 
 	_G.app_name = assert(app_name)
 
@@ -44,20 +64,30 @@ function daemon(app_name)
 	_G.tmp_dir = rawget(_G, 'tmp_dir') or path.normalize(indir(indir(base_dir, 'tmp'), app_name))
 
 	--r:run_cmdequire an optional config file.
-	pcall(require, app_name..'_conf')
+	local ok, opt = pcall(require, app_name..'_conf')
+	app.conf = ok and type(opt) == 'table' and opt or {}
 
-	function cmd.help(usage)
-		if usage then
-			io.stderr:write('Usage: '..app_name..' '..usage..'\n')
-		else
-			print'Options:'
-			print('   -v       verbose')
-			print('   --debug  debug')
-			print'Commands:'
+	local wrapped = {help=1, start=1}
+	function cmd.help(extra)
+		if extra then
 			for k,v in sortedpairs(cmd) do
-				print('   '..(k:gsub('_', '-')))
+				if not wrapped[k] then
+					say(fmt('   %-33s %s', k:gsub('_', '-'), help[k] or ''))
+				end
 			end
+			return
 		end
+		say''
+		say(' USAGE: '..app_name..' [OPTIONS] COMMAND ...')
+		say''
+		for k,v in sortedpairs(cmd) do
+			print(fmt('   %-33s %s', k:gsub('_', '-'), help[k] or ''))
+		end
+		say''
+		say' OPTIONS:'
+		say''
+		say'   -v       verbose'
+		say'   --debug  debug'
 	end
 
 	function app:run_cmd(f, ...) --stub
@@ -91,6 +121,7 @@ function daemon(app_name)
 				logging.debug = true
 				env('DEBUG', 1)
 			else
+				if s == '--help' then s = 'help' end
 				local c = s and s:gsub('-', '_')
 				f = c and cmd[c]
 					or (Windows and wincmd[c])
