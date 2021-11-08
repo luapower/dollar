@@ -10,7 +10,7 @@
 
 	logargs(...) -> ...
 
-	debug.env <- 'dev' | 'prod', etc.
+	logging.env <- 'dev' | 'prod', etc.
 	logging.filter <- {severity->true}
 
 	logging:tofile(logfile, max_disk_size)

@@ -6,7 +6,7 @@
 	daemon(app_name) -> app
 
 	app_name     app codename (the name of your main Lua module).
-	debug.env    app environment ('dev').
+	app_env      app environment ('dev').
 	APP_conf.lua optional app config file loaded by the daemon() call.
 	var_dir      r/w persistent data dir (base_dir).
 	tmp_dir      r/w persistent temp dir (base_dir/tmp/app_name).
@@ -108,6 +108,7 @@ function daemon(app_name)
 		local logfile = indir(var_dir, app_name..'.log')
 		logging:tofile(logfile)
 
+		logging.env = app_env
 		logging.verbose = app_name
 		local i = 1
 		local f
