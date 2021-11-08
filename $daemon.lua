@@ -131,11 +131,8 @@ function daemon(app_name)
 				break
 			end
 		end
-		if env'DEBUG'   then logging.debug   = true end
-		if env'VERBOSE' then logging.verbose = true end
-
-		print('VERBOSE=', env'VERBOSE')
-		print('DEBUG=', env'DEBUG')
+		if repl(env'DEBUG'  , '', nil) then logging.debug   = true end
+		if repl(env'VERBOSE', '', nil) then logging.verbose = true end
 
 		return self:run_cmd(f, select(i, ...))
 	end
