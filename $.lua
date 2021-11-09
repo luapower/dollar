@@ -185,6 +185,10 @@ i8p = glue.i8p
 i8a = glue.i8a
 u8p = glue.u8p
 u8a = glue.u8a
+i32p = glue.i32p
+i32a = glue.i32a
+u32p = glue.u32p
+u32a = glue.u32a
 
 buffer   = glue.buffer
 dynarray = glue.dynarray

@@ -6,8 +6,11 @@
 	daemon(app_name) -> app
 
 	app_name     app codename (the name of your main Lua module).
-	app_env      app environment ('dev').
 	APP_conf.lua optional app config file loaded by the daemon() call.
+		deploy    app deployment name.
+		env       app environment ('dev').
+		log_host  log server host.
+		log_port  log server port.
 	var_dir      r/w persistent data dir (base_dir).
 	tmp_dir      r/w persistent temp dir (base_dir/tmp/app_name).
 	cmd          {name->f} place to add command-line handlers.
@@ -88,6 +91,7 @@ function daemon(app_name)
 		say''
 		say'   -v       verbose'
 		say'   --debug  debug'
+		say''
 	end
 
 	function app:run_cmd(f, ...) --stub
@@ -104,12 +108,12 @@ function daemon(app_name)
 		mkdir(var_dir)
 		mkdir(tmp_dir)
 
-		--open the logfile.
-		local logfile = indir(var_dir, app_name..'.log')
-		logging:tofile(logfile)
+		--set up logging.
 
-		logging.env = app_env
+		logging.deploy  = app.conf.deploy
+		logging.env     = app.conf.env
 		logging.verbose = app_name
+
 		local i = 1
 		local f
 		while true do
@@ -117,10 +121,10 @@ function daemon(app_name)
 			i = i + 1
 			if s == '-v' then
 				logging.verbose = true
-				env('VERBOSE', 1)
+				env('VERBOSE', 1) --propagate verbosity to sub-processes.
 			elseif s == '-d' then
 				logging.debug = true
-				env('DEBUG', 1)
+				env('DEBUG', 1) --propagate debug to sub-processes.
 			else
 				if s == '--help' then s = 'help' end
 				local c = s and s:gsub('-', '_')
@@ -131,8 +135,17 @@ function daemon(app_name)
 				break
 			end
 		end
+
+		--inherit debug and verbosity from parent process.
 		if repl(env'DEBUG'  , '', nil) then logging.debug   = true end
 		if repl(env'VERBOSE', '', nil) then logging.verbose = true end
+
+		local logfile = indir(var_dir, app_name..'.log')
+		logging:tofile(logfile)
+
+		if app.conf.log_host and app.conf.log_port then
+			logging:toserver(app.conf.log_host, app.conf.log_port)
+		end
 
 		return self:run_cmd(f, select(i, ...))
 	end
