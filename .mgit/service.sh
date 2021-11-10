@@ -32,7 +32,7 @@ main() {
 	elif [ "$1" == tail ]; then
 		tail -f $LOG 2>/dev/null
 	elif [ "$1" == run ]; then
-		exec $CMD
+		exec $CMD start
 	else
 		echo "Usage: $0 [run | start | stop | restart | status | tail]"
 	fi
