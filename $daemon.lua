@@ -123,8 +123,10 @@ function daemon(app_name)
 				logging.verbose = true
 				env('VERBOSE', 1) --propagate verbosity to sub-processes.
 			elseif s == '--debug' then
+				logging.verbose = true
 				logging.debug = true
 				env('DEBUG', 1) --propagate debug to sub-processes.
+				env('VERBOSE', 1) --propagate verbosity to sub-processes.
 			else
 				if s == '--help' then s = 'help' end
 				local c = s and s:gsub('-', '_')

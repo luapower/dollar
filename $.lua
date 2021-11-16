@@ -150,7 +150,7 @@ local function print_func(print)
 		return ...
 	end
 end
-print = print_func(print)
+print = print_func(lua_print)
 pp.print = print_func(pp.print)
 pr = print_func(pr)
 
