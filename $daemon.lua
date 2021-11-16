@@ -122,7 +122,7 @@ function daemon(app_name)
 			if s == '-v' then
 				logging.verbose = true
 				env('VERBOSE', 1) --propagate verbosity to sub-processes.
-			elseif s == '-d' then
+			elseif s == '--debug' then
 				logging.debug = true
 				env('DEBUG', 1) --propagate debug to sub-processes.
 			else

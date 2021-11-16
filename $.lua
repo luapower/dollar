@@ -166,6 +166,7 @@ day    = glue.day
 sunday = glue.sunday
 month  = glue.month
 year   = glue.year
+timeago = glue.timeago
 
 canopen     = glue.canopen
 readfile    = glue.readfile
