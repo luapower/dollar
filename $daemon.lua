@@ -95,7 +95,14 @@ function daemon(app_name)
 	end
 
 	function app:run_cmd(f, ...) --stub
-		return f(...)
+		local exit_code = f(...)
+		self:finish()
+		return exit_code
+	end
+
+	--if you override run_cmd() then you have to call this!
+	function app:finish()
+		logging:toserver_stop()
 	end
 
 	function app:run(...)
@@ -149,9 +156,7 @@ function daemon(app_name)
 			logging:toserver(app.conf.log_host, app.conf.log_port)
 		end
 
-		local exit_code = self:run_cmd(f, select(i, ...))
-		logging:toserver_stop()
-		return exit_code
+		return self:run_cmd(f, select(i, ...))
 	end
 
 	return app
