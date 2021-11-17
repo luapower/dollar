@@ -149,7 +149,9 @@ function daemon(app_name)
 			logging:toserver(app.conf.log_host, app.conf.log_port)
 		end
 
-		return self:run_cmd(f, select(i, ...))
+		local exit_code = self:run_cmd(f, select(i, ...))
+		logging:toserver_stop()
+		return exit_code
 	end
 
 	return app
