@@ -101,11 +101,6 @@ string.capitalize = glue.capitalize
 
 collect = glue.collect
 
-cocreate    = coroutine.create
-cowrap      = coroutine.wrap
-resume      = coroutine.resume
-yield       = coroutine.yield
-
 noop     = glue.noop
 pass     = glue.pass
 
@@ -152,7 +147,6 @@ local function print_func(print)
 end
 print = print_func(lua_print)
 pp.print = print_func(pp.print)
-pr = print_func(pr)
 
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback
@@ -160,7 +154,6 @@ traceback = debug.traceback
 time.install() --replace os.date, os.time and os.clock.
 date   = os.date
 clock  = os.clock
-sleep  = time.sleep
 time   = glue.time --replace time module with the uber-time function.
 day    = glue.day
 sunday = glue.sunday
