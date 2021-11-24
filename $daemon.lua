@@ -11,8 +11,9 @@
 		env       app environment ('dev').
 		log_host  log server host.
 		log_port  log server port.
-	var_dir      r/w persistent data dir (base_dir).
-	tmp_dir      r/w persistent temp dir (base_dir/tmp/app_name).
+	app_dir      app directory (exe dir for bundled apps, or Lua source dir).
+	var_dir      r/w persistent data dir (app_dir).
+	tmp_dir      r/w persistent temp dir (app_dir/tmp/app_name).
 	cmd          {name->f} place to add command-line handlers.
 	wincmd       add Windows-only commands here.
 	lincmd       add Linux-only commands here.
@@ -57,14 +58,14 @@ function daemon(app_name)
 	--require it at runtime don't try to load it again.
 	package.loaded[app_name] = app
 
-	--cd to base_dir so that we can use relative paths for everything.
-	local base_dir = exedir
+	--cd to app_dir so that we can use relative paths for everything.
+	app_dir = exedir
 	if not package.loaded.bundle_loader then
 		--standalone luajit exe. files are in luapower dir at ../..
-		base_dir = indir(indir(base_dir, '..'), '..')
+		app_dir = indir(indir(app_dir, '..'), '..')
 	end
-	_G.var_dir = rawget(_G, 'var_dir') or path.normalize(indir(base_dir, app_name..'-var'))
-	_G.tmp_dir = rawget(_G, 'tmp_dir') or path.normalize(indir(indir(base_dir, 'tmp'), app_name))
+	_G.var_dir = rawget(_G, 'var_dir') or path.normalize(indir(app_dir, app_name..'-var'))
+	_G.tmp_dir = rawget(_G, 'tmp_dir') or path.normalize(indir(indir(app_dir, 'tmp'), app_name))
 
 	--r:run_cmdequire an optional config file.
 	local ok, opt = pcall(require, app_name..'_conf')
@@ -111,7 +112,7 @@ function daemon(app_name)
 			return app
 		end
 
-		check('fs', 'cd', fs.cd(base_dir), 'could not change dir to %s', base_dir)
+		check('fs', 'cd', fs.cd(app_dir), 'could not change dir to %s', app_dir)
 		mkdir(var_dir)
 		mkdir(tmp_dir)
 
