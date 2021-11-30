@@ -10,8 +10,11 @@ pp      = require'pp'
 exedir  = require'package.exedir'
 exepath = require'package.exepath'
 
-isstr = function(s) return type(s) == 'string' end
-isnum = function(s) return type(s) == 'number' end
+isstr  = function(s) return type(s) == 'string' end
+isnum  = function(x) return type(x) == 'number' end
+isint  = function(x) return type(x) == 'number' and floor(x) == x end
+istab  = function(x) return type(x) == 'table'  end
+isfunc = function(f) return type(f) == 'function' end
 
 floor       = math.floor
 ceil        = math.ceil
@@ -37,15 +40,15 @@ nextpow2    = glue.nextpow2
 repl        = glue.repl
 
 concat      = table.concat
+cat         = table.concat
 catargs     = glue.catargs
 insert      = table.insert
 remove      = table.remove
 shift       = glue.shift
-add         = table.insert
-push        = table.insert
+local insert = insert; function add(t, v) return insert(t, v) end
+push        = add
 pop         = table.remove
 del         = table.remove
-cat         = table.concat
 ins         = table.insert
 rem         = table.remove
 append      = glue.append
@@ -213,6 +216,10 @@ end
 
 if not ... then
 	local t = {}
+	require'$log'
+	require'$fs'
+	require'$proc'
+	require'$daemon'
 	for k,v in pairs(_G) do
 		if k ~= 'type' then --reused too much, don't like it colored.
 			t[#t+1] = k
