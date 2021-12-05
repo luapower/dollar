@@ -143,7 +143,7 @@ gettersandsetters = glue.gettersandsetters
 lua_print = print
 local function print_func(print)
 	return function(...)
-		print(unpack(imap(pack(...), logargs)))
+		print(logargs(true, ...))
 		io.stdout:flush()
 		return ...
 	end
@@ -163,6 +163,8 @@ sunday = glue.sunday
 month  = glue.month
 year   = glue.year
 timeago = glue.timeago
+
+tobytes = glue.tobytes
 
 canopen     = glue.canopen
 readfile    = glue.readfile
