@@ -9,6 +9,7 @@
 	logerror(module, event, fmt, ...)
 
 	logargs(...) -> ...
+	logprintargs(...) -> ...
 
 	logging.env <- 'dev' | 'prod', etc.
 	logging.filter <- {severity->true}
@@ -27,3 +28,4 @@ dbg      = logging.dbg
 warnif   = logging.warnif
 logerror = logging.logerror
 logargs  = logging.args
+logprintargs = logging.printargs

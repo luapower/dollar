@@ -143,7 +143,7 @@ gettersandsetters = glue.gettersandsetters
 lua_print = print
 local function print_func(print)
 	return function(...)
-		print(logargs(true, ...))
+		print(logprintargs(...))
 		io.stdout:flush()
 		return ...
 	end
@@ -199,6 +199,7 @@ dbg        = dbg      or noop
 warnif     = warnif   or noop
 logerror   = logerror or noop
 logargs    = logargs  or pass
+logprintargs = logprintargs or pass
 
 raise = errors.raise
 
