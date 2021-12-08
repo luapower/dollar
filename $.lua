@@ -10,11 +10,11 @@ pp      = require'pp'
 exedir  = require'package.exedir'
 exepath = require'package.exepath'
 
-isstr  = function(s) return type(s) == 'string' end
-isnum  = function(x) return type(x) == 'number' end
-isint  = function(x) return type(x) == 'number' and floor(x) == x end
-istab  = function(x) return type(x) == 'table'  end
-isfunc = function(f) return type(f) == 'function' end
+isstr  = glue.isstr
+isnum  = glue.isnum
+isint  = glue.isint
+istab  = glue.istab
+isfunc = glue.isfunc
 
 floor       = math.floor
 ceil        = math.ceil
