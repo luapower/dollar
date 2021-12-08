@@ -164,7 +164,7 @@ month  = glue.month
 year   = glue.year
 timeago = glue.timeago
 
-tobytes = glue.tobytes
+kbytes = glue.kbytes
 
 canopen     = glue.canopen
 readfile    = glue.readfile
