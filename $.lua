@@ -221,7 +221,6 @@ if not ... then
 	local t = {}
 	require'$log'
 	require'$fs'
-	require'$proc'
 	require'$daemon'
 	for k,v in pairs(_G) do
 		if k ~= 'type' then --reused too much, don't like it colored.
