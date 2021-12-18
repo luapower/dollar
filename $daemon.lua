@@ -35,10 +35,11 @@ end
 
 function sayn(s)
 	io.stderr:write(s)
+	io.stderr:flush()
 end
 
 function die(s)
-	say('ABORT: '..s)
+	log('ERROR', app_name, 'die', '%s', s)
 	os.exit(1)
 end
 
