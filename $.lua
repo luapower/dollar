@@ -1,5 +1,5 @@
 
--- "Seriously, there's no need for all that qualifying of everything" - Fartman
+--drop all the tools on the floor
 
 ffi     = require'ffi'
 bit     = require'bit'
