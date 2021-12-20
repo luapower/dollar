@@ -140,16 +140,11 @@ after    = glue.after
 override = glue.override
 gettersandsetters = glue.gettersandsetters
 
-lua_print = print
-local function print_func(print)
-	return function(...)
-		print(logprintargs(...))
-		io.stdout:flush()
-		return ...
-	end
+function pr(...) --better print, esp. when $log is loaded.
+	print(logprintargs(...))
+	io.stdout:flush()
+	return ...
 end
-print = print_func(lua_print)
-pp.print = print_func(pp.print)
 
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback
