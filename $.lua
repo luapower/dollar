@@ -140,11 +140,7 @@ after    = glue.after
 override = glue.override
 gettersandsetters = glue.gettersandsetters
 
-function pr(...) --better print, esp. when $log is loaded.
-	print(logprintargs(...))
-	io.stdout:flush()
-	return ...
-end
+pr = pr or pp --pp's printer is good, $log's printer is even better.
 
 trace = function() print(debug.traceback()) end
 traceback = debug.traceback

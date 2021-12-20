@@ -29,3 +29,9 @@ warnif   = logging.warnif
 logerror = logging.logerror
 logargs  = logging.args
 logprintargs = logging.printargs
+
+function pr(...)
+	print(logprintargs(...))
+	io.stdout:flush()
+	return ...
+end
