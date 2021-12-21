@@ -45,7 +45,7 @@ end
 --init -----------------------------------------------------------------------
 
 --for strict mode...
-cmd, wincmd, lincmd, help = nil
+app_name, cmd, wincmd, lincmd, help = nil
 var_dir = var_dir
 tmp_dir = tmp_dir
 
