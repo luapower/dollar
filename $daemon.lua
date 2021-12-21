@@ -44,15 +44,20 @@ end
 
 --init -----------------------------------------------------------------------
 
+--for strict mode...
+cmd, wincmd, lincmd, help = nil
+var_dir = var_dir
+tmp_dir = tmp_dir
+
 function daemon(app_name)
+
+	_G.app_name = assert(app_name)
 
 	local app = {}
 	cmd = {}
 	wincmd = {}
 	lincmd = {}
 	help = {}
-
-	_G.app_name = assert(app_name)
 
 	--consider this module loaded so that other app submodules that
 	--require it at runtime don't try to load it again.
@@ -64,8 +69,8 @@ function daemon(app_name)
 		--standalone luajit exe. files are in luapower dir at ../..
 		app_dir = indir(indir(app_dir, '..'), '..')
 	end
-	_G.var_dir = rawget(_G, 'var_dir') or path.normalize(indir(app_dir, app_name..'-var'))
-	_G.tmp_dir = rawget(_G, 'tmp_dir') or path.normalize(indir(indir(app_dir, 'tmp'), app_name))
+	var_dir = var_dir or path.normalize(indir(app_dir, app_name..'-var'))
+	tmp_dir = tmp_dir or path.normalize(indir(indir(app_dir, 'tmp'), app_name))
 
 	app.conf = {
 		app_name = app_name,
